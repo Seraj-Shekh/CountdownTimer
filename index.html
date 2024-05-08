@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Countdown Timer</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, label {
+        color: #333;
+    }
+    #countdown {
+        font-size: 2em;
+        margin-top: 20px;
+        color: #555;
+    }
+    input[type="number"] {
+        width: 100px;
+        padding: 8px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    button {
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    .message {
+        color: #777;
+        margin-bottom: 20px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Countdown Timer</h1>
+    <p class="message">This tool calculates the time remaining until the target year from today.</p>
+    <label for="year">Enter target year:</label>
+    <input type="number" id="year" min="2022" max="2100" value="2024">
+    <button onclick="startCountdown()">Start Countdown</button>
+    <div id="countdown"></div>
+</div>
+
+<script>
+    // Function to calculate remaining time until start of specified year
+    function calculateRemainingTime(targetYear) {
+        const now = new Date();
+        const targetDate = new Date(targetYear, 0, 1); // January 1st of target year
+
+        const distance = targetDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        return { days, hours, minutes, seconds };
+    }
+
+    // Function to update countdown display
+    function updateCountdown() {
+        const targetYear = document.getElementById("year").value;
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        
+        if(targetYear == currentYear) {
+            document.getElementById("countdown").innerHTML = `The year ${currentYear} is already running.`;
+            return;
+        } else if(targetYear < currentYear) {
+            document.getElementById("countdown").innerHTML = `The year ${targetYear} has already passed.`;
+            return;
+        }
+
+        const remainingTime = calculateRemainingTime(targetYear);
+
+        document.getElementById("countdown").innerHTML = `
+            ${remainingTime.days}d ${remainingTime.hours}h ${remainingTime.minutes}m ${remainingTime.seconds}s
+        `;
+    }
+
+    // Function to start the countdown
+    function startCountdown() {
+        updateCountdown();
+        setInterval(updateCountdown, 1000); // Update every second
+    }
+</script>
+
+</body>
+</html>
