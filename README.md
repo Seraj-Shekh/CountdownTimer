@@ -1,6 +1,6 @@
 # Countdown Timer
 
-Countdown Timer is a simple web application that allows users to calculate the time remaining until a specified target year from the current date. Visit this site to use it. https://keen-dasik-ad9e2b.netlify.app/
+Countdown Timer is a simple web application that allows users to calculate the time remaining until a specified target year from the current date. Visit this site to use it. https://seraj-countdowm-timer.netlify.app/
 
 ## Features
 
